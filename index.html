@@ -14,6 +14,9 @@
 			crossorigin="anonymous"
 		/>
 
+		<!-- My stylesheet -->
+		<link rel="stylesheet" href="styles.css" />
+
 		<title>Collatz Conjecture</title>
 	</head>
 	<style>
@@ -22,33 +25,65 @@
 		}
 	</style>
 	<body>
-		<header class="jumbotron">
+		<header class="jumbotron jumbotron-fluid bg-dark p-5 text-white">
 			<h1>Collatz Conjecture ("3x + 1" Problem)</h1>
+			<p class="lead">"The most dangerous problem in mathematics"</p>
+			
+			<p class="lead">
+				The conjecture states that no matter which positive number you start with, you
+				will always reach 1 eventually. 
+			</p>
+			<p class="lead">
+					No number has been found that does not adhere to this pattern.
+				</p>
+				<p class="lead">
+					Not for lack of trying... this problem has been calculated up to 2<sup>68</sup> (295,147,905,179,352,825,856), that's 200 Quintillion numbers!
+				</p>
+			
+			<p class="lead">
+				<a href="https://en.wikipedia.org/wiki/Collatz_conjecture">Wikipedia Article</a>
+			</p>
+			<p class="lead">
+				<a href="https://youtu.be/094y1Z2wpJg">Veritasium Youtube Video</a>
+			</p>
+			
+		</header>
+		<main class="conainter-fluid">
 			<h2>Rules:</h2>
 			<ul>
 				<li>If number x is odd: Multiply by 3 and add 1</li>
 				<li>If number x is even: Divide by 2</li>
 			</ul>
-			<p class="lead">
-				"The conjecture states that no matter which number you start with, you
-				will always reach 1 eventually.”
-			</p>
-		</header>
-		<main class="conainter-fluid ml-5">
-			<form>
-				<label for="inputSeed">Input Seed:</label>
-				<input type="number" name="inputSeed" id="inputSeed" value="0" />
-				<input
-					class="btn btn-primary text-white"
-					type="button"
-					id="collatzButton"
-					value="Run Collatz Conjecture"
-					onclick="collatzify()"
-				/>
-				<p>Seed Value: <span id="displaySeed"></span></p>
-				<p>Steps: <span id="steps">0</span></p>
-			</form>
-			<ul id="numList"></ul>
+			<div class="row p-2 m-2">
+				<!-- Input -->
+				<div id="col1" class="col col-md-3 p-4">
+					<form action="#" class="inputForm p-3" onsubmit="return false">
+						<h2 class="text-center">Input</h2>
+						<label for="inputSeed">Input Seed Value:</label>
+						<input type="number" name="inputSeed" id="inputSeed" value="0" />
+						<input
+							class="btn btn-primary text-white mt-2"
+							type="button"
+							id="collatzButton"
+							value="Run"
+							onclick="collatzify()"
+						/>
+					</form>										
+				</div>
+				<!-- Chart -->
+				<div id="col2" class="col col-md-6 p-2">
+					<h2 class="text-center">Chart</h1>
+					<canvas id="collatzChart"></canvas>
+				</div>
+				
+				<!-- Values Output -->
+				<div id="col3" class="col col-md-3 p-2">
+					<h2 class="text-center">Values</h2>
+					<p>Seed Value: <span id="displaySeed"></span></p>
+					<p>Steps: <span id="steps">0</span></p>
+					<ul id="numList"></ul>
+				</div>
+			</div>
 		</main>
 
 		<!-- JQuery & Bootstrap-->
@@ -63,6 +98,10 @@
 			crossorigin="anonymous"
 		></script>
 
+		<!-- ChartJS -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<!-- My JS -->
 		<script src="script.js"></script>
 	</body>
 </html>

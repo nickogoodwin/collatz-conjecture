@@ -3,34 +3,67 @@ let displayCurrentValue = document.getElementById('displaySeed');
 let displaySteps = document.getElementById('steps');
 let numList = document.getElementById('numList');
 
-function collatzify() {
-	//cleanup for each run
-	removeListItems(numList);
-	displaySteps.innerHTML = 0;
+let valueArray = [];
+let countArray = [];
 
-	let value = parseInt(inputSeed.value, 10);
+//Setup initial empty chart
+const labels = countArray;
+const data = {
+	labels: labels,
+	datasets: [
+		{
+			label: 'Value',
+			backgroundColor: '#5bc0de',
+			data: valueArray,
+		},
+	],
+};
 
-	let counter = parseInt(displaySteps.innerHTML, 10);
+//config chart params
+const config = {
+	type: 'line',
+	data: data,
+	options: {},
+};
 
-	displayCurrentValue.innerHTML = value;
+//Build Chart
+const collatzChart = new Chart(document.getElementById('collatzChart'), config);
 
-	while (value > 1) {
-		let prevValue = value;
-		if (value % 2 == 0) {
-			value = value / 2;
-			// numList.innerHTML += `<li><b>${prevValue}</b> / 2 = <b>${value}</b></li>`;
-		} else {
-			value = 3 * value + 1;
-			// numList.innerHTML += `<li>(3 * <b>${prevValue}</b>) + 1 = <b>${value}</b></li>`;
-		}
-		numList.innerHTML += `<li>${value}</li>`;
-		counter++;
-		displaySteps.innerHTML = counter;
-	}
-}
-
+// Remove list items on each run
 function removeListItems(numList) {
 	while (numList.firstChild) {
 		numList.removeChild(numList.firstChild);
 	}
+}
+
+function collatzify() {
+	removeListItems(numList);
+	collatzChart.data.labels = [];
+	collatzChart.data.datasets[0].data = [];
+	displaySteps.innerHTML = 0;
+	let counter = 0;
+	let value = parseInt(inputSeed.value, 10);
+
+	//Display value from input
+	displayCurrentValue.innerHTML = value;
+
+	//push initial value as 1st step
+	collatzChart.data.labels.push(`Step ${counter}`);
+	collatzChart.data.datasets[0].data.push(value);
+
+	//Collatz Conjecture
+	while (value > 1) {
+		if (value % 2 === 0) {
+			value = value / 2;
+		} else {
+			value = 3 * value + 1;
+		}
+		counter++;
+		numList.innerHTML += `<li>${value}</li>`;
+
+		collatzChart.data.labels.push(`Step ${counter}`);
+		collatzChart.data.datasets[0].data.push(value);
+	}
+	displaySteps.innerHTML = counter;
+	collatzChart.update();
 }
